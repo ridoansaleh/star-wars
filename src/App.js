@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
-import "./App.css";
-import oopsIcon from "./embarrassed.svg";
-import maleIcon from "./boy.svg";
-import femaleIcon from "./woman.svg";
+import "./css/App.css";
+import oopsIcon from "./assets/embarrassed.svg";
+import maleIcon from "./assets/boy.svg";
+import femaleIcon from "./assets/woman.svg";
 import request from "./request";
 import { getData, saveData } from "./localstorage";
 import { lowerCase, createArray } from "./utils";
@@ -87,12 +87,11 @@ function App() {
   }, [potentialEnemyList, planetList, starshipsList, vehiclesList]);
 
   const handleNameChange = (e) => {
-    if (isLoading) return;
     setSearchPotentialEnemy(e.target.value);
   };
 
   const handleSearchClick = () => {
-    if (!searchPotentialEnemy) return;
+    if (!searchPotentialEnemy || isLoading) return;
     const foundEnemy = potentialEnemyList.find(
       (d) => lowerCase(searchPotentialEnemy) === lowerCase(d.name)
     );
@@ -156,8 +155,8 @@ function App() {
               <>
                 {foundPotentialEnemy.starships.length > 0 ? (
                   <ol>
-                    {foundPotentialEnemy.starships.map((d) => (
-                      <li>
+                    {foundPotentialEnemy.starships.map((d, index) => (
+                      <li key={index}>
                         <div>
                           <strong>model</strong>:{" "}
                           <span className="attr-value">{d.model}</span>
@@ -195,8 +194,8 @@ function App() {
               <>
                 {foundPotentialEnemy.vehicles.length > 0 ? (
                   <ol>
-                    {foundPotentialEnemy.vehicles.map((d) => (
-                      <li>
+                    {foundPotentialEnemy.vehicles.map((d, index) => (
+                      <li key={index}>
                         <div>
                           <strong>name</strong>:{" "}
                           <span className="attr-value">{d.name}</span>
